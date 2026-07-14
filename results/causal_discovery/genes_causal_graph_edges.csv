@@ -1,4 +1,4 @@
-source,target,causal_estimate,bootstrap_freq
+source,target,average_causal_effect_estimate,bootstrap_edge_frequency
 NWD1,disease,-0.2664454439791233,1.0
 HOXB7,disease,0.1122745782855475,0.9225
 sex,disease,-0.095903803007319,0.7525

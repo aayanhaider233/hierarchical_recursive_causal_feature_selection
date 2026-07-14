@@ -1,4 +1,4 @@
-source,target,causal_estimate,bootstrap_freq
+source,target,average_causal_effect_estimate,bootstrap_edge_frequency
 ME3,disease,0.5766577025120918,0.99
 ME6,disease,0.5697150117788903,0.995
 ME2,disease,0.486303794999208,0.84

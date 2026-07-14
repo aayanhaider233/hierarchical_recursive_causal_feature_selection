@@ -1,0 +1,9 @@
+data/intermediate/gene_GO_term_map.csv
+data/methylation/train_dmr_matrix_full.csv
+data/methylation/test_dmr_matrix_full.csv
+data/
+data/processed/*.gz
+pycache/
+*.pyc
+.vscode/
+Thumbs.db

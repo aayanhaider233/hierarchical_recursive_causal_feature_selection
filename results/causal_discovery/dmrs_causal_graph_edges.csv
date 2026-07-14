@@ -1,4 +1,4 @@
-source,target,causal_estimate,bootstrap_freq,bootstrap_refute,placebo_refute,common_cause_refute
+source,target,average_causal_effect_estimate,bootstrap_edge_frequency,bootstrap_refutation,placebo_refutation,random_common_cause_refutation
 chr19_DMR_21,disease,-0.2710913651842362,1.0,-0.2775679484674682,0.0036226512053242,-0.2710801172778375
 sex,disease,-0.0979762166233583,0.7825,-0.1014395336512766,0.0010389330381675,-0.0979543527060773
 chr2_DMR_182,disease,0.0917836211326843,1.0,0.0922061071616921,0.0029448128390448,0.0918523224335671
