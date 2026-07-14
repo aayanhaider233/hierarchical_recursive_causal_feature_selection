@@ -1,4 +1,5 @@
 data/intermediate/gene_GO_term_map.csv
+data/intermediate/gene_methylation_matrix.csv
 data/methylation/train_dmr_matrix_full.csv
 data/methylation/test_dmr_matrix_full.csv
 data/
