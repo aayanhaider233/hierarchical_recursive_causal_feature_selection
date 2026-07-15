@@ -1,8 +1,6 @@
 import pandas as pd
-import pyaging as pya
 import re
 from difflib import get_close_matches
-from pathlib import Path
 
 COLUMN_CANONICAL = {
     'disease': [
