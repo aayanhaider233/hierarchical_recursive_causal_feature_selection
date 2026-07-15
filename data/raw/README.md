@@ -23,7 +23,7 @@ Four schizophrenia methylation cohorts sourced from NCBI Gene Expression Omnibus
 
 
 
-#### Note
+#### Notes
 
 
 
