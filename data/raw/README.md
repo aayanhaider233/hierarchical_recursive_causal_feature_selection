@@ -2,7 +2,7 @@
 
 
 
-**Four schizophrenia methylation cohorts sourced from NCBI Gene Expression Omnibus (GEO) were used.**
+Four schizophrenia methylation cohorts sourced from NCBI Gene Expression Omnibus (GEO) were used.
 
 
 
