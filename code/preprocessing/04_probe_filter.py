@@ -1,5 +1,4 @@
 import pandas as pd
-from pathlib import Path
 
 def filter_probes(methylation_df, manifest_path, xreactive_probes_path, multimap_probes_path):
     
