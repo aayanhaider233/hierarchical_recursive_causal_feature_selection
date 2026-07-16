@@ -1,5 +1,6 @@
 import pandas as pd
 import re
+import gzip
 from difflib import get_close_matches
 
 COLUMN_CANONICAL = {
@@ -50,7 +51,10 @@ def normalise_columns(df, similarity_threshold = 0.8):
 def parse_metadata(metadata_path, batch):
     metadata = {}
     gsm_list = []
-    with open(metadata_path, 'rt', encoding='utf-8') as f:
+
+    open_func = gzip.open if str(metadata_path).endswith(".gz") else open
+
+    with open_func(metadata_path, "rt", encoding="utf-8") as f:
         for line in f:
             line = line.strip()
             if not line:
@@ -83,7 +87,7 @@ def parse_metadata(metadata_path, batch):
 
     return meta_df 
 
-def clean_metadata(meta_df, control_label = "0", case_label = "1", male_label = "M", female_label = "F", drop_columns = None):
+def clean_metadata(meta_df, control_label = "0", case_label = "1", male_label = "M", female_label = "F", drop_columns = "source_tissue"):
     meta_df = meta_df[~meta_df['age'].isin(['NA', 'NaN', '', None])]
     meta_df = meta_df.dropna(subset = ['age'])
     meta_df['age'] = meta_df['age'].astype(float)
@@ -98,6 +102,6 @@ def clean_metadata(meta_df, control_label = "0", case_label = "1", male_label = 
         invalid_age_mask = ~meta_df['age'].between(0, 120)
         meta_df = meta_df[~invalid_age_mask]
 
-    if drop_columns:
+    if drop_columns is not None and drop_columns in meta_df.columns:
         meta_df = meta_df.drop(columns=drop_columns)
     return meta_df

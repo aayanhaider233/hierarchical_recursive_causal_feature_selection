@@ -1,5 +1,6 @@
 import pandas as pd
 
+
 def remove_non_cpg_probes(methylation_matrix_path, batch):
 
     methylation_df = pd.read_csv(methylation_matrix_path, index_col=0)
@@ -13,24 +14,14 @@ def remove_non_cpg_probes(methylation_matrix_path, batch):
     return final_methylation_df
 
 
-def clean_cpg_probes(methylation_df):
-
-    sample_ids = methylation_df[["sample_id"]]
-    values = methylation_df.drop(columns=["sample_id"])
-
-    values = values.clip(0, 1)
-    values = values.dropna(axis=1, thresh=int(0.9 * len(values)))
-
-    return pd.concat([sample_ids, values], axis=1)
-
-
 def filter_by_metadata(methylation_df, metadata_df):
 
-    valid_samples = set(metadata_df["sample_id"])
+    valid_samples = set(methylation_df["sample_id"])
 
+    filtered_metadata_df = metadata_df[metadata_df["sample_id"].isin(valid_samples)]
     filtered_methylation_df = methylation_df[methylation_df["sample_id"].isin(valid_samples)]
 
-    return filtered_methylation_df, metadata_df
+    return filtered_methylation_df, filtered_metadata_df
 
 
 def filter_by_detection_pvalue(methylation_df, pval_threshold=0.05, label="_Detection_Pval"):
@@ -48,3 +39,14 @@ def filter_by_detection_pvalue(methylation_df, pval_threshold=0.05, label="_Dete
     probe_filtered_methylation_df = methylation_df[["sample_id"] + good_probes]
 
     return probe_filtered_methylation_df
+
+
+def clean_cpg_probes(methylation_df):
+
+    sample_ids = methylation_df[["sample_id"]]
+    values = methylation_df.drop(columns=["sample_id"])
+
+    values = values.clip(0, 1)
+    values = values.dropna(axis=1, thresh=int(0.9 * len(values)))
+
+    return pd.concat([sample_ids, values], axis=1)
