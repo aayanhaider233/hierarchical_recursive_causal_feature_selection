@@ -1,3 +1,7 @@
+annotations/methylation/*.csv
+annotations/methylation/*.txt
+annotations/gene_ontology/*.obo
+
 data/intermediate/gene_methylation_matrix.csv
 data/intermediate/gene_GO_term_map.csv
 
