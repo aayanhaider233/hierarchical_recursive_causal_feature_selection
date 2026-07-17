@@ -1,0 +1,13 @@
+pandas==2.2.2
+numpy==1.26.4
+scipy==1.11.4
+scikit-learn==1.4.2
+statsmodels==0.14.2
+matplotlib==3.8.4
+networkx==3.2.1
+shap==0.45.1
+lingam==1.8.3
+dowhy==0.11.1
+gprofiler-official==1.0.0
+neuroCombat==0.2.12
+pyaging==0.1.11
