@@ -45,7 +45,7 @@ Run the stage driver:
 
 ```bash
 
-python preprocessing/run\_preprocessing.py
+python preprocessing/run_preprocessing.py
 
 ```
 
@@ -113,22 +113,5 @@ python main.py
 * Batch correction is performed on the full M-value matrix before train/test partitioning.
 * EAA models are fitted on the training set only and applied to the test set to avoid information leakage.
 * Epigenetic age features are replaced by their corresponding EAA features.
-
-
-
-
-
-#### Dependencies
-
-
-
-* Python 3.10+
-* pandas
-* numpy
-* statsmodels
-* pyaging
-* neuroCombat
-* scikit-learn
-
 
 
