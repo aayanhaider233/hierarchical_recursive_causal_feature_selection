@@ -106,4 +106,4 @@ dmr_df <- data.frame(
   stringsAsFactors = FALSE
 )
 
-write.csv(dmr_df, dmr_csv, row.names = FALSE)
+write.csv(dmr_df, dmr_csv, row.names = FALSE, quote = FALSE)
