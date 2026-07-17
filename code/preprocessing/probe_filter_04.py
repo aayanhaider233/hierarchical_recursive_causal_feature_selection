@@ -1,8 +1,8 @@
 import pandas as pd
 
-def filter_probes(methylation_df, manifest_path, xreactive_probes_path, multimap_probes_path):
+def filter_probes(methylation_df, manifest_path, cross_reactive_probes_path, multimap_probes_path):
     
-    cross = pd.read_csv(xreactive_probes_path, usecols=['TargetID'])['TargetID'].tolist()
+    cross = pd.read_csv(cross_reactive_probes_path, usecols=['TargetID'])['TargetID'].tolist()
     
     multi = pd.read_csv(multimap_probes_path, header=None)[0].tolist()
     

@@ -1,10 +1,10 @@
 import numpy as np
 import pandas as pd
 
-def beta_to_m(concatenated_df, sample_id_col="sample_id", epsilon=1e-6):
+def beta_to_m(methylation_df, sample_id_col="sample_id", epsilon=1e-6):
 
-    sample_ids = concatenated_df[[sample_id_col]]
-    beta_values = concatenated_df.drop(columns=[sample_id_col]).astype(float)
+    sample_ids = methylation_df[[sample_id_col]]
+    beta_values = methylation_df.drop(columns=[sample_id_col]).astype(float)
 
     beta_values = beta_values.clip(epsilon, 1 - epsilon)
 

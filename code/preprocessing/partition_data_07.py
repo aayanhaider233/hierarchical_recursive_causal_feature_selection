@@ -1,6 +1,6 @@
 from sklearn.model_selection import train_test_split
 
-def set_partition(methylation_df, metadata_df, batch_info, test_size=0.3, stratify_class="disease"):
+def partition_data(methylation_df, metadata_df, batch_info, test_size=0.3, stratify_class="disease"):
     common_samples = sorted(set(methylation_df["sample_id"]) & set(metadata_df["sample_id"]))
 
     methylation_df = methylation_df.set_index("sample_id").loc[common_samples]
