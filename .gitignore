@@ -5,8 +5,11 @@ annotations/gene_ontology/*.obo
 data/intermediate/gene_methylation_matrix.csv
 data/intermediate/gene_GO_term_map.csv
 
-data/methylation/train_dmr_matrix_full.csv
-data/methylation/test_dmr_matrix_full.csv
+data/methylation/train_dmr_matrix.csv
+data/methylation/test_dmr_matrix.csv
+data/methylation/cpg_mval_matrix_full_corrected.csv
+data/methylation/train_cpg_mval_matrix_corrected.csv
+data/methylation/test_cpg_mval_matrix_corrected.csv
 
 data/classification/train_s0.csv
 data/classification/test_s0.csv
