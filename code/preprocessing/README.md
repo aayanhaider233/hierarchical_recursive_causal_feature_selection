@@ -39,13 +39,13 @@ This stage performs data harmonisation, quality control, epigenetic age estimati
 
 
 
-Run the stage driver:
+Run the stage driver from the project root:
 
 
 
 ```bash
 
-python preprocessing/run_preprocessing.py
+python code/preprocessing/run_preprocessing.py
 
 ```
 
