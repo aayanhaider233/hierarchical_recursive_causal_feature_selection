@@ -16,8 +16,8 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 
 METHYLATION_PATH = DATA / "methylation"
-TRAIN_CPG = METHYLATION_PATH / "train_cpg_mval_matrix_corrected.csv.csv"
-TEST_CPG  = METHYLATION_PATH / "test_cpg_mval_matrix_corrected.csv.csv"
+TRAIN_CPG = METHYLATION_PATH / "train_cpg_mval_matrix_corrected.csv"
+TEST_CPG  = METHYLATION_PATH / "test_cpg_mval_matrix_corrected.csv"
 
 METADATA_PATH = DATA / "metadata"
 TRAIN_META = METADATA_PATH / "train_metadata.csv"
@@ -30,17 +30,25 @@ MANIFEST_PATH = ROOT / "annotations" / "methylation" / "humanmethylation450_1501
 # --------------------------------------------------
 
 INTERMEDIATE_PATH = DATA / "intermediate"
-CAUSAL_DISCOVERY_INPUTS = DATA / "causal_methylation_inputs"
 INTERMEDIATE_PATH.mkdir(parents=True, exist_ok=True)
+
+CAUSAL_DISCOVERY_INPUTS = DATA / "causal_methylation_inputs"
+CAUSAL_DISCOVERY_INPUTS.mkdir(parents=True, exist_ok=True)
+
 DMR_RDS = INTERMEDIATE_PATH / "dmr_groups.rds"
 DMR_CPG_MAP = INTERMEDIATE_PATH / "dmr_cpg_map.csv"
+
 TRAIN_DMR = METHYLATION_PATH / "train_dmr_matrix.csv"
 TEST_DMR  = METHYLATION_PATH / "test_dmr_matrix.csv"
+
 DMR_GENE_MAP = INTERMEDIATE_PATH / "dmr_gene_map.csv"
+
 GENE_MATRIX = INTERMEDIATE_PATH / "gene_methylation_matrix.csv"
+
 GENE_MODULE_ASSIGNMENT = INTERMEDIATE_PATH / "gene_module_assignments.csv" 
 ME_MATRIX = CAUSAL_DISCOVERY_INPUTS / "me_matrix.csv"
 GENE_MODULE_MEMBERSHIP = INTERMEDIATE_PATH / "gene_module_kme_matrix.csv"
+
 
 # --------------------------------------------------
 # R code files
