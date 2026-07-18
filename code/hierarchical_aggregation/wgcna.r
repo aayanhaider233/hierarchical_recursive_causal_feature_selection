@@ -3,93 +3,68 @@ library(WGCNA)
 options(stringsAsFactors = FALSE)
 allowWGCNAThreads(nThreads=2)
 
-# ------------------- Load Data -------------------
-dataFile <- "C:/Users/USER/Documents/Thesis/Datasets/Final/train_gene_aggregate.csv"
-data <- read.csv(dataFile, check.names = FALSE)
+args <- commandArgs(trailingOnly = TRUE)
 
-# ------------------- Separate genes and traits -------------------
-n_traits <- 6
-n_total <- ncol(data)
+if (length(args) < 4) {
+  stop("Usage: Rscript wgcna.R <gene_matrix path> <module_assignment out path> <me_matrix out path> <module_membership out path>")
+}
 
-geneData <- data[, !(colnames(data) %in% c("age","sex","disease","hannum_EAA","horvath2013_EAA","grimage2_EAA"))]
-traits <- data[, c("age","sex","disease","hannum_EAA","horvath2013_EAA","grimage2_EAA")]
+gene_matrix <- args[1]
+assignment_path <- args[2]
+me_matrix_path <- args[3]
+membership_path <- args[4]
 
-# ------------------- Check genes and samples -------------------
-gsg <- goodSamplesGenes(geneData, verbose = 3)
+genes <- read.csv(gene_matrix, check.names = FALSE)
+
+sample_ids <- genes$sample_id
+gene_data <- genes[, !(colnames(genes) %in% c("sample_id"))]
+
+gsg <- goodSamplesGenes(gene_data, verbose = 3)
+
 if (!gsg$allOK) {
-  geneData <- geneData[gsg$goodSamples, gsg$goodGenes]
+  gene_data <- gene_data[gsg$goodSamples, gsg$goodGenes]
+  sample_ids <- sample_ids[gsg$goodSamples]
 }
 
-# ------------------- Choose soft-threshold power -------------------
 powers <- c(1:10, seq(12, 20, 2))
-sft <- pickSoftThreshold(geneData, powerVector = powers, verbose = 5)
+sft <- pickSoftThreshold(gene_data, powerVector = powers, verbose = 5)
 
-# Pick the smallest power where scale-free topology fit R^2 >= 0.9
-softPower <- sft$powerEstimate
-if (is.na(softPower)) {
-  softPower <- powers[which.max(sft$fitIndices[, 2])]
+soft_power <- sft$powerEstimate
+if (is.na(soft_power)) {
+  soft_power <- powers[which.max(sft$fitIndices[, 2])]
 }
-cat("Chosen soft-thresholding power:", softPower, "\n")
 
-# ------------------- Construct network and detect modules -------------------
 net <- blockwiseModules(
-  geneData,
-  power = softPower,
+  gene_data,
+  power = soft_power,
   TOMType = "unsigned",
   minModuleSize = 30,
   reassignThreshold = 0,
   mergeCutHeight = 0.25,
   numericLabels = TRUE,
   pamRespectsDendro = FALSE,
-  saveTOMs = TRUE,
+  saveTOMs = FALSE,
   verbose = 3
 )
 
-# ------------------- Module colors -------------------
-moduleColors <- labels2colors(net$colors)
-table(moduleColors)
+module_colours <- labels2colors(net$colors)
 
-# Save module assignments: gene -> module
-geneModuleAssignment <- data.frame(
-  Gene = colnames(geneData),
-  ModuleColor = moduleColors,
+module_assignment <- data.frame(
+  Gene = colnames(gene_data),
+  ModuleColor = module_colours,
   ModuleLabel = net$colors
 )
-write.csv(geneModuleAssignment,
-          "C:/Users/USER/Documents/Thesis/Datasets/Final/gene_module_assignments.csv",
-          row.names = FALSE)
 
-# ------------------- Module eigengenes -------------------
-MEs <- net$MEs
-# Ensure column names match module colors
-colnames(MEs) <- paste0("ME", substring(colnames(MEs), 3)) # e.g., "ME1" -> "MEblue"
+write.csv(module_assignment, assignment_path, row.names = FALSE)
 
-write.csv(MEs, "C:/Users/USER/Documents/Thesis/Datasets/Final/module_eigengenes.csv", row.names = FALSE)
+me <- net$MEs
 
-# ------------------- Module-trait correlations -------------------
-moduleTraitCor <- cor(MEs, traits, use = "p")
-moduleTraitPvalue <- corPvalueStudent(moduleTraitCor, nrow(geneData))
+colnames(me) <- paste0("ME", substring(colnames(me), 3))
 
-write.csv(moduleTraitCor,
-          "C:/Users/USER/Documents/Thesis/Datasets/Final/module_trait_cor.csv",
-          row.names = TRUE)
-write.csv(moduleTraitPvalue,
-          "C:/Users/USER/Documents/Thesis/Datasets/Final/module_trait_pvalues.csv",
-          row.names = TRUE)
+me_df <- data.frame(sample_id = sample_ids, me, check.names = FALSE)
 
-# ------------------- Gene-module membership (kME) -------------------
-geneModuleMembership <- signedKME(geneData, MEs)
-write.csv(geneModuleMembership,
-          "C:/Users/USER/Documents/Thesis/Datasets/Final/gene_module_membership.csv",
-          row.names = TRUE)
+write.csv(me_df, me_matrix_path, row.names = FALSE)
 
-# ------------------- Extract genes per module -------------------
-modules <- unique(moduleColors)
-for (mod in modules) {
-  genesInModule <- colnames(geneData)[moduleColors == mod]
-  outFile <- paste0("C:/Users/USER/Documents/Thesis/Datasets/Final/genes_module_", mod, ".csv")
-  write.csv(genesInModule, outFile, row.names = FALSE)
-}
+module_membership <- signedKME(gene_data, me)
 
-# ------------------- Done -------------------
-print("WGCNA analysis complete! All outputs saved as CSVs.")
+write.csv(module_membership, membership_path, row.names = TRUE)

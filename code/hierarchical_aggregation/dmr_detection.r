@@ -1,8 +1,8 @@
 suppressPackageStartupMessages({
   library(limma)
   library(DMRcate)
-  library(GenomicRanges)
   library(data.table)
+  library(GenomicRanges)
   library(IlluminaHumanMethylation450kanno.ilmn12.hg19)
 })
 
