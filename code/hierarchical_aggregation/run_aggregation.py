@@ -30,7 +30,7 @@ MANIFEST_PATH = ROOT / "annotations" / "methylation" / "humanmethylation450_1501
 # --------------------------------------------------
 
 INTERMEDIATE_PATH = DATA / "intermediate"
-CAUSAL_DISCOVERY_INPUTS = DATA / "causal_discovery"
+CAUSAL_DISCOVERY_INPUTS = DATA / "causal_methylation_inputs"
 INTERMEDIATE_PATH.mkdir(parents=True, exist_ok=True)
 DMR_RDS = INTERMEDIATE_PATH / "dmr_groups.rds"
 DMR_CPG_MAP = INTERMEDIATE_PATH / "dmr_cpg_map.csv"
