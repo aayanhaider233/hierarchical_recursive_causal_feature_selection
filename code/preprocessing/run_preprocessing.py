@@ -203,7 +203,7 @@ def run_preprocessing():
     # 9. Epigenetic age acceleration computation
     # --------------------------------------------------
 
-    train_metadata_eaa, test_metadata_eaa = eaa.compute_eaa(
+    train_metadata, test_metadata, train_eaa, test_eaa = eaa.compute_eaa(
         train_metadata=train_metadata, 
         test_metadata=test_metadata
     )
@@ -232,12 +232,21 @@ def run_preprocessing():
         index=False
     )
 
-    train_metadata_eaa.to_csv(
+    train_metadata.to_csv(
         METADATA_SAVE / "train_metadata.csv", 
         index=False
     )
-    test_metadata_eaa.to_csv(
+    test_metadata.to_csv(
         METADATA_SAVE / "test_metadata.csv", 
+        index=False
+    )
+
+    train_eaa.to_csv(
+        METADATA_SAVE / "train_eaa.csv", 
+        index=False
+    )
+    test_eaa.to_csv(
+        METADATA_SAVE / "test_eaa.csv", 
         index=False
     )
 
